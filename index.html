@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page Pet: a cute virtual pet for your browser (Chrome, Firefox, Edge)</title>
+<meta name="description" content="Page Pet is a free browser extension that puts a cute animal at the bottom of every web page. Pet it, feed it, collect treasures. Private: nothing you browse leaves your computer.">
+<link rel="canonical" href="https://lakshmisraj.github.io/page-pet/">
+<meta name="theme-color" content="#f6efe4">
+<link rel="icon" type="image/png" sizes="32x32" href="icon32.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icon128.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Page Pet">
+<meta property="og:title" content="Page Pet: a cute virtual pet for your browser">
+<meta property="og:description" content="A tiny animal that lives at the bottom of your web pages. Pet it, feed it, and collect the treasures it digs up.">
+<meta property="og:url" content="https://lakshmisraj.github.io/page-pet/">
+<meta property="og:image" content="https://lakshmisraj.github.io/page-pet/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="An orange cartoon cat walking along the bottom of a web page">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Page Pet: a cute virtual pet for your browser">
+<meta name="twitter:description" content="A tiny animal that lives at the bottom of your web pages. Free for Chrome, Firefox, Edge and more.">
+<meta name="twitter:image" content="https://lakshmisraj.github.io/page-pet/og.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Page Pet",
+  "applicationCategory": "BrowserApplication",
+  "applicationSubCategory": "Browser extension",
+  "operatingSystem": "Chrome, Microsoft Edge, Firefox, Brave, Opera, Vivaldi",
+  "description": "A browser extension that puts a cute animated pet at the bottom of every web page. It reacts to typing, scrolling and music, digs up collectible treasures, and stays out of your way.",
+  "url": "https://lakshmisraj.github.io/page-pet/",
+  "image": "https://lakshmisraj.github.io/page-pet/og.png",
+  "softwareVersion": "1.2.0",
+  "offers": [
+    { "@type": "Offer", "name": "Page Pet", "price": "0", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Goodies pack (optional, one time)", "price": "2.99", "priceCurrency": "USD" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is Page Pet free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All eight animals, the cookie and ball, treasures, and every setting are free. An optional one-time Goodies pack (US$2.99) adds two animals, four outfits, and special treats and toys." } },
+    { "@type": "Question", "name": "Which browsers does Page Pet work in?", "acceptedAnswer": { "@type": "Answer", "text": "Chrome, Microsoft Edge, Brave, Opera, Vivaldi and Arc use the Chrome version. Firefox 140 and later has its own version. A Safari version for Mac is in preparation." } },
+    { "@type": "Question", "name": "Does Page Pet read what I type or the pages I visit?", "acceptedAnswer": { "@type": "Answer", "text": "No. It notices that a key was pressed so the pet can sit beside the text box, but never which key. It ignores password, payment-card and one-time-code fields completely, and nothing about your browsing leaves your computer." } },
+    { "@type": "Question", "name": "Will the pet get in the way of buttons on a page?", "acceptedAnswer": { "@type": "Answer", "text": "It walks off buttons, links and text boxes by itself, and fades so clicks pass through when there is nowhere clear to stand. You can also make it quiet, snooze it for an hour, or hide it on any site." } },
+    { "@type": "Question", "name": "What happens to my pet when I am away?", "acceptedAnswer": { "@type": "Answer", "text": "Its tummy and joy drain slowly, but never for more than six hours' worth and never below 15 percent. When you come back after a few hours it greets you with a present." } }
+  ]
+}
+</script>
+<style>
+  :root {
+    --ink: #23182e; --ink-soft: #5b4a5e; --page: #f6efe4; --card: #fffaf3; --sun: #f2b23c;
+    --coral: #ef7d57; --leaf: #5fa84b; --sky: #cfe6f2; --line: 2.5px solid var(--ink);
+    --display: "Fredoka", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+    --body: "Nunito", ui-rounded, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.6 var(--body); }
+  ::selection { background: #ffd98a; }
+  a { color: inherit; text-underline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  .top { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+  .brand { display: flex; align-items: center; gap: 10px; font: 700 22px/1 var(--display); text-decoration: none; }
+  .brand img { width: 36px; height: 36px; }
+  .top nav { display: flex; gap: 22px; font-weight: 700; }
+  .top nav a { text-decoration: none; }
+  .top nav a:hover { text-decoration: underline; }
+  @media (max-width: 640px) { .top nav { display: none; } }
+
+  .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; padding: 36px 0 56px; }
+  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; padding-top: 16px; } }
+  h1 { font: 700 clamp(40px, 6vw, 68px)/1.02 var(--display); letter-spacing: -0.025em; margin: 0 0 18px; }
+  h1 em { font-style: normal; color: var(--coral); }
+  .lede { font-size: 20px; color: var(--ink-soft); max-width: 34ch; margin: 0 0 26px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 12px 20px;
+    font: 700 17px/1 var(--body); color: var(--ink); text-decoration: none; cursor: pointer;
+    background: #fff; border: var(--line); border-radius: 10px; box-shadow: 0 4px 0 var(--ink);
+  }
+  .btn:hover { background: #fff3dc; }
+  .btn:active { transform: translateY(4px); box-shadow: none; }
+  .btn.primary { background: var(--ink); color: #fff; }
+  .btn.primary:hover { background: #3a2a48; }
+  .btn[aria-disabled=true] { opacity: .6; cursor: default; }
+  .btn small { font-weight: 600; opacity: .75; }
+  .browsers { margin: 16px 0 0; font-size: 14px; color: var(--ink-soft); }
+
+  .stage {
+    position: relative; aspect-ratio: 5 / 4; background: var(--card); border: var(--line); border-radius: 18px;
+    box-shadow: 0 6px 0 var(--ink); overflow: hidden;
+  }
+  .stage .bar { height: 38px; border-bottom: var(--line); display: flex; align-items: center; gap: 7px; padding: 0 14px; background: #f1e6d5; }
+  .stage .bar i { width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; }
+  .stage .lines { padding: 22px 26px; }
+  .stage .lines b { display: block; height: 14px; margin: 0 0 12px; background: #eadfce; border-radius: 7px; }
+  .stage .critter { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); }
+  .stage .critter .pet-svg { zoom: 2.3; }
+  .stage .say {
+    position: absolute; left: 50%; bottom: 186px; transform: translateX(-6%); background: #fff; border: var(--line);
+    border-radius: 14px; padding: 6px 14px; font: 700 16px/1.2 var(--body); white-space: nowrap;
+  }
+
+  section { padding: 56px 0; }
+  h2 { font: 700 clamp(30px, 4vw, 42px)/1.1 var(--display); letter-spacing: -0.02em; margin: 0 0 10px; }
+  .intro { color: var(--ink-soft); max-width: 60ch; margin: 0 0 28px; }
+
+  .try { background: #fff; border: var(--line); border-radius: 18px; padding: 26px; box-shadow: 0 6px 0 var(--ink); }
+  .try-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .try-row + .try-row { margin-top: 14px; }
+  .try-label { font-weight: 800; min-width: 70px; }
+  .chip {
+    min-height: 44px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 8px;
+    font: 700 15px/1 var(--body); color: var(--ink); background: #fff; border: 2px solid var(--ink);
+    border-radius: 10px; box-shadow: 0 3px 0 var(--ink); cursor: pointer;
+  }
+  .chip svg { width: 24px; height: 24px; }
+  .chip[aria-pressed=true] { background: #ffe7b8; transform: translateY(3px); box-shadow: none; }
+  .chip .tag { font-size: 11px; font-weight: 800; padding: 2px 6px; border-radius: 99px; background: var(--ink); color: #fff; }
+  .try p { margin: 16px 0 0; font-size: 15px; color: var(--ink-soft); }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  .feat { background: var(--card); border: var(--line); border-radius: 16px; padding: 20px; }
+  .feat h3 { font: 600 21px/1.2 var(--display); margin: 0 0 6px; }
+  .feat p { margin: 0; color: var(--ink-soft); font-size: 16px; }
+
+  .zoo { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  @media (max-width: 760px) { .zoo { grid-template-columns: repeat(2, 1fr); } }
+  .zoo figure { margin: 0; background: var(--card); border: var(--line); border-radius: 16px; padding: 14px 6px 10px; text-align: center; }
+  .zoo .pet-svg { zoom: 1.3; margin: 0 auto; }
+  .zoo figcaption { font: 600 17px/1.2 var(--display); margin-top: 6px; }
+  .zoo figcaption small { display: block; font: 700 12px/1.4 var(--body); color: var(--coral); }
+
+  .book { display: grid; grid-template-columns: repeat(5, 64px); gap: 10px; margin: 6px 0 14px; }
+  .book span { display: grid; place-items: center; height: 64px; background: #fff; border: 2px solid var(--ink); border-radius: 12px; }
+  .book svg { width: 34px; height: 34px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+  .list { margin: 0; padding: 0; list-style: none; }
+  .list li { padding: 7px 0 7px 30px; position: relative; }
+  .list li::before { content: ""; position: absolute; left: 4px; top: 15px; width: 12px; height: 12px; border-radius: 50%; background: var(--leaf); border: 2px solid var(--ink); }
+
+  .pack { background: var(--ink); color: #fff; border-radius: 22px; padding: 34px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: center; }
+  @media (max-width: 860px) { .pack { grid-template-columns: 1fr; } }
+  .pack h2 { color: #fff; }
+  .pack p { color: #e9dff0; }
+  .price { font: 700 44px/1 var(--display); color: var(--sun); }
+  .price small { font: 700 16px var(--body); color: #e9dff0; }
+  .pack .goods { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pack .goods span { width: 60px; height: 60px; display: grid; place-items: center; background: #fff; border-radius: 14px; }
+  .pack .goods svg { width: 34px; height: 34px; }
+
+  details { background: var(--card); border: var(--line); border-radius: 14px; padding: 4px 20px; margin: 0 0 12px; }
+  summary { font: 600 20px/1.3 var(--display); padding: 14px 0; cursor: pointer; }
+  details p { margin: 0 0 16px; color: var(--ink-soft); }
+
+  footer { border-top: var(--line); padding: 28px 0 120px; font-size: 15px; color: var(--ink-soft); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; }
+</style>
+</head>
+<body>
+  <header class="wrap top">
+    <a class="brand" href="./"><img src="icon128.png" alt="" width="36" height="36">Page Pet</a>
+    <nav aria-label="Main">
+      <a href="#try">Try it</a>
+      <a href="#animals">Animals</a>
+      <a href="#goodies">Goodies</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div>
+        <h1>A tiny pet that lives on <em>your web pages</em></h1>
+        <p class="lede">Page Pet puts a cute animal at the bottom of every site you visit. Pet it, feed it, throw it a ball, and collect the treasures it digs up.</p>
+        <div class="cta" id="install">
+          <a class="btn primary" href="#install" aria-disabled="true" title="Coming soon">Add to Chrome <small>free</small></a>
+          <a class="btn" href="#install" aria-disabled="true" title="Coming soon">Add to Firefox</a>
+          <a class="btn" href="#install" aria-disabled="true" title="Coming soon">Add to Edge</a>
+        </div>
+        <p class="browsers">Also works in Brave, Opera, Vivaldi and Arc. Safari for Mac is coming.</p>
+      </div>
+      <div class="stage" aria-hidden="true">
+        <div class="bar"><i></i><i></i><i></i></div>
+        <div class="lines"><b style="width:72%"></b><b></b><b style="width:88%"></b><b style="width:60%"></b></div>
+        <div class="say">look what I found!</div>
+        <div class="critter" id="hero-pet"></div>
+      </div>
+    </div>
+
+    <section id="try">
+      <div class="wrap">
+        <h2>Try it right here</h2>
+        <p class="intro">The real Page Pet is walking along the bottom of this page. Click it to pat it, drag it to pick it up, or use these buttons.</p>
+        <div class="try">
+          <div class="try-row"><span class="try-label">Give</span><span id="try-treats"></span></div>
+          <div class="try-row"><span class="try-label">Throw</span><span id="try-toys"></span></div>
+          <div class="try-row"><span class="try-label">Be a</span><span id="try-animals"></span></div>
+          <p>Scroll fast and it hops. Read to the end of the page and it might dig you up a bookmark.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>It notices what you're doing</h2>
+        <p class="intro">Page Pet reacts to your browsing without ever reading it.</p>
+        <div class="grid">
+          <div class="feat"><h3>Typing buddy</h3><p>Trots over beside the box you're typing in and nods along. Password and payment fields are ignored completely.</p></div>
+          <div class="feat"><h3>Scroll and read</h3><p>Hops when you scroll fast and cheers when you reach the end of a long page.</p></div>
+          <div class="feat"><h3>Music lover</h3><p>Dances when a page plays music or video with sound.</p></div>
+          <div class="feat"><h3>Curious</h3><p>Wanders over to see what you're looking at when your cursor rests.</p></div>
+          <div class="feat"><h3>Night owl</h3><p>Puts on a nightcap after 11pm, and suggests a stretch after a long session.</p></div>
+          <div class="feat"><h3>Never in the way</h3><p>Walks off buttons and links, fades so clicks pass through, and can be quiet, snoozed, or hidden on any site.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="animals">
+      <div class="wrap">
+        <h2>Pick your animal</h2>
+        <p class="intro">Eight animals are free. The red panda and lamb come with the Goodies pack.</p>
+        <div class="zoo" id="zoo"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap split">
+        <div>
+          <h2>Collect its treasures</h2>
+          <p class="intro">Your pet digs up stars, hearts, gems and flowers now and then. Six more are earned by what you do, at most one of each a day.</p>
+          <ul class="list">
+            <li>Read a long page to the end for a bookmark</li>
+            <li>Play some music for a music note</li>
+            <li>Browse after 11pm for the moon</li>
+            <li>Type up a storm for a pencil</li>
+            <li>Take a stretch break for a teacup</li>
+            <li>Come back after a while for the sun</li>
+          </ul>
+        </div>
+        <div><div class="book" id="book" aria-label="The ten treasures"></div></div>
+      </div>
+    </section>
+
+    <section id="goodies">
+      <div class="wrap">
+        <div class="pack">
+          <div>
+            <h2>The Goodies pack</h2>
+            <p>Two extra animals, four outfits (a bow, a scarf, a flower crown and round glasses), cupcakes and fish, a frisbee and a ball of yarn. Everything else in Page Pet stays free.</p>
+            <p class="price">$2.99 <small>one time, yours to keep</small></p>
+          </div>
+          <div class="goods" id="goods" aria-label="Goodies pack items"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <div class="wrap split">
+        <div>
+          <h2>Private by design</h2>
+          <p class="intro">No accounts and no analytics. What you do on pages never leaves your computer.</p>
+        </div>
+        <ul class="list">
+          <li>Never reads what you type or what pages say</li>
+          <li>Ignores password, card and one-time-code fields</li>
+          <li>Your pet's name is never shown to websites</li>
+          <li>Only goes online if you buy the Goodies pack</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <h2>Questions</h2>
+        <details><summary>Is Page Pet free?</summary><p>Yes. All eight animals, the cookie and ball, treasures, and every setting are free. An optional one-time Goodies pack (US$2.99) adds two animals, four outfits, and special treats and toys.</p></details>
+        <details><summary>Which browsers does Page Pet work in?</summary><p>Chrome, Microsoft Edge, Brave, Opera, Vivaldi and Arc use the Chrome version. Firefox 140 and later has its own version. A Safari version for Mac is in preparation.</p></details>
+        <details><summary>Does Page Pet read what I type or the pages I visit?</summary><p>No. It notices that a key was pressed so the pet can sit beside the text box, but never which key. It ignores password, payment-card and one-time-code fields completely, and nothing about your browsing leaves your computer.</p></details>
+        <details><summary>Will the pet get in the way of buttons on a page?</summary><p>It walks off buttons, links and text boxes by itself, and fades so clicks pass through when there is nowhere clear to stand. You can also make it quiet, snooze it for an hour, or hide it on any site.</p></details>
+        <details><summary>What happens to my pet when I am away?</summary><p>Its tummy and joy drain slowly, but never for more than six hours' worth and never below 15 percent. When you come back after a few hours it greets you with a present.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Page Pet 1.2.0</span>
+      <span><a href="privacy.html">Privacy policy</a></span>
+    </div>
+  </footer>
+
+  <script src="demo.js"></script>
+  <script src="pet-core.js"></script>
+  <script src="content.js"></script>
+  <script src="page.js"></script>
+</body>
+</html>

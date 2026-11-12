@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy policy | Page Pet</title>
+<meta name="description" content="How the Page Pet browser extension handles your information: nothing about your browsing leaves your computer.">
+<link rel="canonical" href="https://lakshmisraj.github.io/page-pet/privacy.html"><link rel="icon" type="image/png" sizes="32x32" href="icon32.png">
+<style>
+  body { margin: 0; background: #f6efe4; color: #23182e; font: 17px/1.65 ui-rounded, system-ui, sans-serif; }
+  main { max-width: 70ch; margin: 0 auto; padding: 32px 20px 80px; }
+  a { color: inherit; text-underline-offset: 3px; } code { background: #eadfce; padding: 1px 5px; border-radius: 4px; font-size: .9em; }
+  h1 { font-size: 40px; line-height: 1.1; margin: 24px 0 8px; } h2 { font-size: 24px; margin: 32px 0 6px; }
+</style></head>
+<body><main><a href="./">&larr; Page Pet</a>
+<h1>Page Pet privacy policy</h1>
+<p>Last updated: 12 November 2026 (version 1.2: Goodies pack)</p>
+<p>Page Pet is a browser extension that shows a small animated pet at the bottom of the web pages you visit. This policy explains what it does with information. In short: what you do on web pages never leaves your computer. The one exception is the optional Goodies pack, which is sold through a payment service, ExtensionPay.</p>
+<h2>What Page Pet stores</h2>
+<p>Page Pet keeps the following in your browser&#x27;s own extension storage (<code>chrome.storage.local</code>), on your device only:</p>
+<ul><li>your pet&#x27;s name, chosen animal, and its tummy, joy and energy levels</li><li>the treasures you have collected, and the date each was last found</li><li>your settings: chattiness, whether the pet is shown, a snooze time, and the list of sites you chose to hide it on</li><li>a timestamp of when you were last browsing, used for the welcome-back greeting and the stretch-break reminder</li></ul>
+<p>The list of sites you hide the pet on is the only website information Page Pet keeps, and only because you added those sites yourself.</p>
+<h2>What Page Pet notices but does not keep</h2>
+<p>To react to what you are doing on a page, Page Pet runs on http and https pages and notices:</p>
+<ul><li>that a key was pressed in a text box, so the pet can sit beside it. It never reads or stores which key was pressed, and it ignores password, payment-card and one-time-code fields completely.</li><li>where your mouse pointer is, so the pet&#x27;s eyes can follow it</li><li>how fast you scroll and whether you reached the end of the page</li><li>whether audio or video on the page is playing</li></ul>
+<p>This is handled in the page, in the moment, and is not saved or sent anywhere.</p>
+<h2>The Goodies pack (optional purchase)</h2>
+<p>The Goodies pack is a one-time purchase that unlocks extra animals, outfits, treats and toys. It is handled by ExtensionPay (extensionpay.com), with card payments processed by Stripe. Page Pet never sees or stores your card details.</p>
+<p>To know whether you have bought it, Page Pet&#x27;s background script talks to extensionpay.com:</p>
+<ul><li>Nothing is sent until you click &quot;Unlock goodies&quot; or &quot;Already paid?&quot; in the popup. Until then, Page Pet does not contact ExtensionPay at all.</li><li>When you do, it asks ExtensionPay for an anonymous key, saved in your browser&#x27;s synced extension storage (<code>storage.sync</code>).</li><li>From then on it sends that key to ExtensionPay when you open the popup and when the browser starts, to check whether the key has paid.</li><li>In Firefox, you are asked to allow this before anything is sent.</li><li>If you buy or log in, ExtensionPay records the email address you give it, and Page Pet keeps a copy of your payment status (including that email) in synced storage.</li></ul>
+<p>These requests contain the key only, never anything about the pages you visit, what you type, or your pet. ExtensionPay&#x27;s and Stripe&#x27;s own privacy policies cover what they do with payment information.</p>
+<h2>What Page Pet never does</h2>
+<ul><li>Apart from the ExtensionPay checks above, it makes no network requests.</li><li>It has no analytics, advertising or tracking.</li><li>It does not read the text, forms or content of the pages you visit.</li><li>It does not sell, share or transfer any information to anyone, other than the payment status checks with ExtensionPay described above.</li><li>It does not show your pet&#x27;s name on web pages, so websites cannot read it.</li></ul>
+<h2>Removing your data</h2>
+<p>Uninstalling Page Pet deletes everything it stored in your browser. To have your purchase record removed from ExtensionPay, contact us (see Contact below). You can also hide the pet on a site, or everywhere, from the extension&#x27;s popup at any time.</p>
+<h2>Contact</h2>
+<p>Questions about this policy, or requests to remove your purchase record: open an issue at https://github.com/lakshmisraj/page-pet/issues.</p>
+</main></body></html>

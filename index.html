@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Page Pet: a cute virtual pet for your browser (Chrome, Firefox, Edge)</title>
-<meta name="description" content="Page Pet is a free browser extension that puts a cute animal at the bottom of every web page. Pet it, feed it, collect treasures. Private: nothing you browse leaves your computer.">
+<title>Page Pet: Cute Virtual Pet Extension for Chrome &amp; Firefox</title>
+<meta name="description" content="Page Pet is a free virtual pet browser extension for Chrome, Firefox and Edge. A cute cat, dog, fox or panda walks along your web pages, plays fetch and digs up treasures. Private by design.">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://lakshmisraj.github.io/page-pet/">
 <meta name="theme-color" content="#f6efe4">
 <link rel="icon" type="image/png" sizes="32x32" href="icon32.png">
@@ -27,7 +28,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap"></noscript>
 
 <script type="application/ld+json">
 {
@@ -60,122 +62,7 @@
   ]
 }
 </script>
-<style>
-  :root {
-    --ink: #23182e; --ink-soft: #5b4a5e; --page: #f6efe4; --card: #fffaf3; --sun: #f2b23c;
-    --coral: #ef7d57; --leaf: #5fa84b; --sky: #cfe6f2; --line: 2.5px solid var(--ink);
-    --display: "Fredoka", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
-    --body: "Nunito", ui-rounded, system-ui, sans-serif;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.6 var(--body); }
-  ::selection { background: #ffd98a; }
-  a { color: inherit; text-underline-offset: 3px; }
-  :focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; border-radius: 6px; }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
-
-  .top { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
-  .brand { display: flex; align-items: center; gap: 10px; font: 700 22px/1 var(--display); text-decoration: none; }
-  .brand img { width: 36px; height: 36px; }
-  .top nav { display: flex; gap: 22px; font-weight: 700; }
-  .top nav a { text-decoration: none; }
-  .top nav a:hover { text-decoration: underline; }
-  @media (max-width: 640px) { .top nav { display: none; } }
-
-  .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; padding: 36px 0 56px; }
-  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; padding-top: 16px; } }
-  h1 { font: 700 clamp(40px, 6vw, 68px)/1.02 var(--display); letter-spacing: -0.025em; margin: 0 0 18px; }
-  h1 em { font-style: normal; color: var(--coral); }
-  .lede { font-size: 20px; color: var(--ink-soft); max-width: 34ch; margin: 0 0 26px; }
-  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 12px 20px;
-    font: 700 17px/1 var(--body); color: var(--ink); text-decoration: none; cursor: pointer;
-    background: #fff; border: var(--line); border-radius: 10px; box-shadow: 0 4px 0 var(--ink);
-  }
-  .btn:hover { background: #fff3dc; }
-  .btn:active { transform: translateY(4px); box-shadow: none; }
-  .btn.primary { background: var(--ink); color: #fff; }
-  .btn.primary:hover { background: #3a2a48; }
-  .btn[aria-disabled=true] { opacity: .6; cursor: default; }
-  .btn small { font-weight: 600; opacity: .75; }
-  .browsers { margin: 16px 0 0; font-size: 14px; color: var(--ink-soft); }
-
-  .stage {
-    position: relative; aspect-ratio: 5 / 4; background: var(--card); border: var(--line); border-radius: 18px;
-    box-shadow: 0 6px 0 var(--ink); overflow: hidden;
-  }
-  .stage .bar { height: 38px; border-bottom: var(--line); display: flex; align-items: center; gap: 7px; padding: 0 14px; background: #f1e6d5; }
-  .stage .bar i { width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; }
-  .stage .lines { padding: 22px 26px; }
-  .stage .lines b { display: block; height: 14px; margin: 0 0 12px; background: #eadfce; border-radius: 7px; }
-  .stage .critter { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); }
-  .stage .critter .pet-svg { zoom: 2.3; }
-  .stage .say {
-    position: absolute; left: 50%; bottom: 186px; transform: translateX(-6%); background: #fff; border: var(--line);
-    border-radius: 14px; padding: 6px 14px; font: 700 16px/1.2 var(--body); white-space: nowrap;
-  }
-
-  section { padding: 56px 0; }
-  h2 { font: 700 clamp(30px, 4vw, 42px)/1.1 var(--display); letter-spacing: -0.02em; margin: 0 0 10px; }
-  .intro { color: var(--ink-soft); max-width: 60ch; margin: 0 0 28px; }
-
-  .try { background: #fff; border: var(--line); border-radius: 18px; padding: 26px; box-shadow: 0 6px 0 var(--ink); }
-  .try-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  .try-row + .try-row { margin-top: 14px; }
-  .try-label { font-weight: 800; min-width: 70px; }
-  .chip {
-    min-height: 44px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 8px;
-    font: 700 15px/1 var(--body); color: var(--ink); background: #fff; border: 2px solid var(--ink);
-    border-radius: 10px; box-shadow: 0 3px 0 var(--ink); cursor: pointer;
-  }
-  .chip svg { width: 24px; height: 24px; }
-  .chip[aria-pressed=true] { background: #ffe7b8; transform: translateY(3px); box-shadow: none; }
-  .chip .tag { font-size: 11px; font-weight: 800; padding: 2px 6px; border-radius: 99px; background: var(--ink); color: #fff; }
-  .try p { margin: 16px 0 0; font-size: 15px; color: var(--ink-soft); }
-
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  @media (max-width: 860px) { .grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
-  .feat { background: var(--card); border: var(--line); border-radius: 16px; padding: 20px; }
-  .feat h3 { font: 600 21px/1.2 var(--display); margin: 0 0 6px; }
-  .feat p { margin: 0; color: var(--ink-soft); font-size: 16px; }
-
-  .zoo { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
-  @media (max-width: 760px) { .zoo { grid-template-columns: repeat(2, 1fr); } }
-  .zoo figure { margin: 0; background: var(--card); border: var(--line); border-radius: 16px; padding: 14px 6px 10px; text-align: center; }
-  .zoo .pet-svg { zoom: 1.3; margin: 0 auto; }
-  .zoo figcaption { font: 600 17px/1.2 var(--display); margin-top: 6px; }
-  .zoo figcaption small { display: block; font: 700 12px/1.4 var(--body); color: var(--coral); }
-
-  .book { display: grid; grid-template-columns: repeat(5, 64px); gap: 10px; margin: 6px 0 14px; }
-  .book span { display: grid; place-items: center; height: 64px; background: #fff; border: 2px solid var(--ink); border-radius: 12px; }
-  .book svg { width: 34px; height: 34px; }
-  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
-  .list { margin: 0; padding: 0; list-style: none; }
-  .list li { padding: 7px 0 7px 30px; position: relative; }
-  .list li::before { content: ""; position: absolute; left: 4px; top: 15px; width: 12px; height: 12px; border-radius: 50%; background: var(--leaf); border: 2px solid var(--ink); }
-
-  .pack { background: var(--ink); color: #fff; border-radius: 22px; padding: 34px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: center; }
-  @media (max-width: 860px) { .pack { grid-template-columns: 1fr; } }
-  .pack h2 { color: #fff; }
-  .pack p { color: #e9dff0; }
-  .price { font: 700 44px/1 var(--display); color: var(--sun); }
-  .price small { font: 700 16px var(--body); color: #e9dff0; }
-  .pack .goods { display: flex; flex-wrap: wrap; gap: 10px; }
-  .pack .goods span { width: 60px; height: 60px; display: grid; place-items: center; background: #fff; border-radius: 14px; }
-  .pack .goods svg { width: 34px; height: 34px; }
-
-  details { background: var(--card); border: var(--line); border-radius: 14px; padding: 4px 20px; margin: 0 0 12px; }
-  summary { font: 600 20px/1.3 var(--display); padding: 14px 0; cursor: pointer; }
-  details p { margin: 0 0 16px; color: var(--ink-soft); }
-
-  footer { border-top: var(--line); padding: 28px 0 120px; font-size: 15px; color: var(--ink-soft); }
-  footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="wrap top">
@@ -185,20 +72,21 @@
       <a href="#animals">Animals</a>
       <a href="#goodies">Goodies</a>
       <a href="#faq">FAQ</a>
+      <a href="chrome.html">Install</a>
     </nav>
   </header>
 
   <main>
     <div class="wrap hero">
       <div>
-        <h1>A tiny pet that lives on <em>your web pages</em></h1>
-        <p class="lede">Page Pet puts a cute animal at the bottom of every site you visit. Pet it, feed it, throw it a ball, and collect the treasures it digs up.</p>
+        <h1>A cute virtual pet that lives on <em>your web pages</em></h1>
+        <p class="lede">Page Pet is a free browser extension that puts a cute animal at the bottom of every site you visit. Pet it, feed it, throw it a ball, and collect the treasures it digs up.</p>
         <div class="cta" id="install">
           <a class="btn primary" href="#install" aria-disabled="true" title="Coming soon">Add to Chrome <small>free</small></a>
           <a class="btn" href="#install" aria-disabled="true" title="Coming soon">Add to Firefox</a>
           <a class="btn" href="#install" aria-disabled="true" title="Coming soon">Add to Edge</a>
         </div>
-        <p class="browsers">Also works in Brave, Opera, Vivaldi and Arc. Safari for Mac is coming.</p>
+        <p class="browsers">Also works in Brave, Opera, Vivaldi and Arc. Safari for Mac is coming. Install guides: <a href="chrome.html">Chrome, Edge &amp; Brave</a> · <a href="firefox.html">Firefox</a></p>
       </div>
       <div class="stage" aria-hidden="true">
         <div class="bar"><i></i><i></i><i></i></div>
@@ -305,7 +193,7 @@
   <footer>
     <div class="wrap">
       <span>Page Pet 1.2.0</span>
-      <span><a href="privacy.html">Privacy policy</a></span>
+      <span><a href="chrome.html">For Chrome, Edge &amp; Brave</a> · <a href="firefox.html">For Firefox</a> · <a href="privacy.html">Privacy policy</a> · <a href="https://github.com/lakshmisraj/page-pet">GitHub</a></span>
     </div>
   </footer>
 

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review Page Pet</title>
+<meta name="description" content="Leave a review for Page Pet, the virtual pet browser extension, in your browser's add-on store.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://lakshmisraj.github.io/page-pet/review.html">
+<meta name="theme-color" content="#f6efe4">
+<link rel="icon" type="image/png" sizes="32x32" href="icon32.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="stylesheet" href="style.css">
+<script>
+  // Send people straight to the store for the browser they're using, once that store link exists.
+  (() => {
+    const ua = navigator.userAgent;
+    const chrome = './#install', edge = './#install', firefox = './#install';
+    let to = '';
+    if (/Firefox\//.test(ua)) to = firefox.startsWith('http') ? firefox.replace(/\/?$/, '/reviews/') : '';
+    else if (/Edg\//.test(ua)) to = edge.startsWith('http') ? edge : '';
+    else to = chrome.startsWith('http') ? chrome.replace(/\/?$/, '/reviews') : '';
+    if (to) location.replace(to);
+  })();
+</script>
+</head>
+<body>
+  <header class="wrap top">
+    <a class="brand" href="./"><img src="icon128.png" alt="" width="36" height="36">Page Pet</a>
+  </header>
+  <main class="wrap guide">
+    <h1>Thanks for reviewing Page Pet</h1>
+    <p class="lede">Pick the store you installed it from. A few words about your pet help other people find it.</p>
+    <div class="cta">
+      <a class="btn primary" href="./#install" aria-disabled="true" title="Coming soon">Chrome Web Store</a>
+      <a class="btn" href="./#install" aria-disabled="true" title="Coming soon">Edge Add-ons</a>
+      <a class="btn" href="./#install" aria-disabled="true" title="Coming soon">Firefox Add-ons</a>
+    </div>
+    <p>Found a problem instead? <a href="https://github.com/lakshmisraj/page-pet/issues">Tell us on GitHub</a> and we'll fix it.</p>
+  </main>
+</body>
+</html>

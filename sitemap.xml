@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://lakshmisraj.github.io/page-pet/</loc><lastmod>2026-11-12</lastmod></url>
+  <url><loc>https://lakshmisraj.github.io/page-pet/animals.html</loc><lastmod>2026-11-12</lastmod></url>
+  <url><loc>https://lakshmisraj.github.io/page-pet/help.html</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://lakshmisraj.github.io/page-pet/chrome.html</loc><lastmod>2026-11-12</lastmod></url>
+  <url><loc>https://lakshmisraj.github.io/page-pet/edge.html</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://lakshmisraj.github.io/page-pet/firefox.html</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://lakshmisraj.github.io/page-pet/privacy.html</loc><lastmod>2026-11-12</lastmod></url>
 </urlset>

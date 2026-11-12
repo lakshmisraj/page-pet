@@ -122,3 +122,17 @@
   .crumbs { font-size: 15px; color: var(--ink-soft); margin: 8px 0 18px; }
   .crumbs a { color: inherit; }
   .more { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+
+/* animals.html */
+.guide.wide { max-width: 980px; }
+.beasts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+@media (max-width: 760px) { .beasts { grid-template-columns: 1fr; } }
+.beast { display: flex; gap: 14px; align-items: center; background: var(--card); border: var(--line); border-radius: 16px; padding: 12px 16px; }
+.beast figure { margin: 0; flex: 0 0 96px; min-height: 70px; display: grid; place-items: center; }
+.beast h3 { margin: 0 0 4px; }
+.beast h3 small { font: 700 12px/1 var(--body); color: var(--coral); margin-left: 6px; }
+.beast p { margin: 0; }
+.tt { width: 100%; border-collapse: collapse; }
+.tt th, .tt td { text-align: left; padding: 10px 8px; border-bottom: 1px solid #e3d6c3; vertical-align: middle; }
+.tt td:first-child { white-space: nowrap; font-weight: 700; }
+.ti { display: inline-grid; place-items: center; width: 30px; vertical-align: middle; margin-right: 8px; }

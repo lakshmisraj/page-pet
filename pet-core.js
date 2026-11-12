@@ -25,6 +25,8 @@ const PET_DEFAULTS = {
   hiddenSites: [],     // hostnames where the pet stays hidden
   goodies: false,      // Goodies pack bought; set only by the background worker from ExtensionPay
   outfit: '',          // key of PET_OUTFITS, or '' for none
+  tryOn: null,         // { kind: 'skin'|'outfit', id, until }: a timed preview of a Goodies pack item
+  tryLog: { day: '', n: 0 },   // try-ons used today
   treasures: {},
   lastFound: {},       // treasure kind -> day it was last found ('Tue Nov 11 2026')
   born: 0,
@@ -49,6 +51,12 @@ function normalizePet(raw) {
   for (const k of ['born', 'lastTick', 'snoozeUntil']) p[k] = Number.isFinite(p[k]) ? p[k] : 0;
   p.enabled = p.enabled !== false;
   p.goodies = p.goodies === true;
+  const tr = src.tryOn;
+  p.tryOn = !p.goodies && tr && typeof tr === 'object' && petTryable(tr.kind, tr.id) && Number.isFinite(tr.until)
+    && tr.until > Date.now() && tr.until <= Date.now() + PET_TRY_MS + 5000 ? { kind: tr.kind, id: tr.id, until: tr.until } : null;
+  const tl = src.tryLog;
+  p.tryLog = tl && typeof tl === 'object' && typeof tl.day === 'string' && Number.isSafeInteger(tl.n)
+    ? { day: tl.day.slice(0, 20), n: Math.max(0, tl.n) } : { day: '', n: 0 };
   if (typeof PET_OUTFITS !== 'object' || !petHas(PET_OUTFITS, p.outfit) || !p.goodies) p.outfit = '';
   if (PET_SKINS[p.skin].premium && !p.goodies) p.skin = PET_DEFAULTS.skin;
   if (!['chatty', 'quiet', 'silent'].includes(p.chatter)) p.chatter = 'chatty';
@@ -113,6 +121,23 @@ function changePet(fn) {
 // Every change to the pet is one of these named actions. Pages and the popup ask the
 // background worker to run them (petDo); the worker runs them one at a time, so two
 // tabs can never overwrite each other's changes. Arguments are checked here.
+// ---------- try-on: a one-minute preview of a Goodies pack animal or outfit ----------
+const PET_TRY_MS = 60000;
+const PET_TRIES_PER_DAY = 5;
+function petTryable(kind, id) {
+  if (kind === 'skin') return petHas(PET_SKINS, id) && PET_SKINS[id].premium === true;
+  return kind === 'outfit' && typeof PET_OUTFITS === 'object' && petHas(PET_OUTFITS, id);
+}
+function petTryActive(p) { return !!(p && p.tryOn && p.tryOn.until > Date.now() && !p.goodies); }
+function petTriesLeft(p) {
+  return p.tryLog.day === new Date().toDateString() ? Math.max(0, PET_TRIES_PER_DAY - p.tryLog.n) : PET_TRIES_PER_DAY;
+}
+// What the pet is wearing right now: its own animal and outfit, or the one it's trying on.
+function petLook(p) {
+  const t = petTryActive(p) ? p.tryOn : null;
+  return { skin: t && t.kind === 'skin' ? t.id : p.skin, outfit: t && t.kind === 'outfit' ? t.id : p.outfit };
+}
+
 // A treat or toy is usable if it exists and is free, or the Goodies pack is owned.
 function petGoodieOK(p, group, kind) {
   return typeof PET_GOODIES === 'object' && petHas(PET_GOODIES[group], kind)
@@ -139,6 +164,14 @@ const PET_OPS = {
   rename: (p, name) => { if (typeof name === 'string') p.name = name.trim().slice(0, 16) || PET_DEFAULTS.name; },
   skin: (p, id) => { if (petHas(PET_SKINS, id) && (!PET_SKINS[id].premium || p.goodies)) p.skin = id; },
   outfit: (p, id) => { if (id === '' || (p.goodies && petHas(PET_OUTFITS, id))) p.outfit = id; },
+  tryOn: (p, arg) => {
+    const [kind, id] = Array.isArray(arg) ? arg : [];
+    if (p.goodies || !petTryable(kind, id) || petTriesLeft(p) === 0) return;
+    const today = new Date().toDateString();
+    p.tryLog = { day: today, n: (p.tryLog.day === today ? p.tryLog.n : 0) + 1 };
+    p.tryOn = { kind, id, until: Date.now() + PET_TRY_MS };
+  },
+  tryOff: (p) => { p.tryOn = null; },
   enabled: (p, on) => { p.enabled = on === true; },
   chatter: (p, v) => { if (['chatty', 'quiet', 'silent'].includes(v)) p.chatter = v; },
   snooze: (p, on) => { p.snoozeUntil = on === true ? Date.now() + 3600e3 : 0; },

@@ -206,6 +206,7 @@ ${PET_SVG_CSS}
   let loveUntil = 0;
   let started = false;
   let meal = 'cookie';          // the treat currently being eaten
+  let tryTimer = 0, wasTrying = false;
   let speed = 0;                              // current walking speed, eased toward its target
   const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
   // page-aware extras
@@ -259,7 +260,7 @@ ${PET_SVG_CSS}
     stateUntil = performance.now() + (ms || 0);
     if (s !== 'walk' && s !== 'chase') speed = 0;
     elPet.className = 'pet ' + ({ walk: 'walking', chase: 'walking running', sleep: 'asleep', fall: 'falling' }[s] || s)
-      + ((PET_SKINS[pet.skin] || {}).hop ? ' hops' : '');
+      + ((PET_SKINS[petLook(pet).skin] || {}).hop ? ' hops' : '');
     updateFace();
   }
 
@@ -324,7 +325,7 @@ ${PET_SVG_CSS}
     say(text, ms);
   }
 
-  const sound = () => (PET_SKINS[pet.skin] || {}).sound || 'hi!';
+  const sound = () => (PET_SKINS[petLook(pet).skin] || {}).sound || 'hi!';
 
   // Floating icons: 'heart', 'spark', 'note', 'notes' or 'z'. At most 14 live; each removes itself.
   function hearts(n = 3, kind = 'heart') {
@@ -348,16 +349,24 @@ ${PET_SVG_CSS}
   }
 
   function applyAppearance() {
-    const look = pet.skin + '|' + pet.outfit;
+    // a try-on shows a Goodies pack animal or outfit for a minute, then the pet changes back
+    const lk = petLook(pet), trying = petTryActive(pet);
+    const look = lk.skin + '|' + lk.outfit;
+    clearTimeout(tryTimer);
+    if (trying) tryTimer = setTimeout(applyAppearance, pet.tryOn.until - Date.now() + 100);
     if (look !== shownSkin) {
+      const ended = wasTrying && !trying;
       shownSkin = look;
-      petSetMarkup(elFlip, petModel(pet.skin, pet.outfit));
+      petSetMarkup(elFlip, petModel(lk.skin, lk.outfit));
       elEyes = root.querySelectorAll('.p-pupil');
       elMouth = root.querySelector('.p-mouth');
       lastMouth = null;
       last.look = '';
-      if (started) { say(pick(['new look!', 'ta-da!', 'how do I look?'])); hearts(2); }
+      if (started && trying) { say(pick(['ooh, fancy!', 'do I look cute?', 'I love it!'])); hearts(3); oneShot('pat', 380); }
+      else if (started && ended) sayIdle(pick(['aww, that was fun', 'can I keep it?']));
+      else if (started) { say(pick(['new look!', 'ta-da!', 'how do I look?'])); hearts(2); }
     }
+    wasTrying = trying;
     const display = shown() ? 'block' : 'none';
     if (display !== lastDisplay) { lastDisplay = display; host.style.setProperty('display', display, 'important'); }
     updateFace();
